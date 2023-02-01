@@ -9,6 +9,6 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.use(routes.pollPostRoute);
+app.use(routes.pollRoute);
 
 app.listen(process.env.PORT, () => console.log("Online on PORT:" + process.env.PORT));

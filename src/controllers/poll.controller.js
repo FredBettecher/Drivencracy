@@ -1,35 +1,43 @@
 import dayjs from "dayjs";
-import { poll } from "../database/db.js"
+import { poll } from "../database/db.js";
 import { pollSchema } from "../schemas/poll.schema.js";
 
-export default async function pollPost(req, res) {
-    const { title, expireAt } = req.body;
+export const pollPost = async (req, res) => {
+    let { title, expireAt } = req.body;
     const pollValidation = pollSchema.validate( { title, expireAt } );
-    const date = dayjs.Dayjs(Date.now()).format('YYYY-MM-DD', 'HH:mm').add(30, "day");
-    console.log(date);
+    const expireDate = dayjs(Date.now() + 2.592e+9).format('YYYY-MM-DD HH:mm');
 
     try {
         if(pollValidation.error){
-            return res.status(422).send("Formato inválido.");
+            return res.status(422).send(pollValidation.error.message);
         }
-
-        if(expireAt === "") {
-            return(
-                await poll.insertOne({
-                    title,
-                    expireAt: date
-                })
-            );
+        
+        if(expireAt === "" || expireAt === null) {
+            const newPoll = await poll.insertOne({
+                title,
+                expireAt: expireDate
+            });
+            res.status(201).send("Enquete criada com sucesso!");
+            return newPoll;
         } else {
-            return(
-                await poll.insertOne({
-                    title,
-                    expireAt
-                })
-            );
+            const newPoll = await poll.insertOne({
+                title,
+                expireAt
+            });
+            res.status(201).send("Enquete criada com sucesso!");
+            return newPoll;
         }
 
     } catch(err) {
         return res.status(500).send(err.message);
     }
 }
+
+export const pollGet = async (req, res) => {
+    poll.find({}).toArray().then(pollList => {
+        return res.send(pollList);
+    });
+}
+
+const pollControllers = { pollPost, pollGet };
+export default pollControllers;
