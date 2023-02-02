@@ -38,6 +38,6 @@ export const choicePost = async (req, res) => {
         return newChoice;
 
     } catch(err) {
-        return res.status(501).send(err.message);
+        return res.status(500).send(err.message);
     }
 }
