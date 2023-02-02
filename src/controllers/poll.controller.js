@@ -12,21 +12,12 @@ export const pollPost = async (req, res) => {
             return res.status(422).send(pollValidation.error.message);
         }
         
-        if(expireAt === "" || expireAt === null) {
-            const newPoll = await poll.insertOne({
-                title,
-                expireAt: expireDate
-            });
-            res.status(201).send("Enquete criada com sucesso!");
-            return newPoll;
-        } else {
-            const newPoll = await poll.insertOne({
-                title,
-                expireAt
-            });
-            res.status(201).send("Enquete criada com sucesso!");
-            return newPoll;
-        }
+        const newPoll = await poll.insertOne({
+            title,
+            expireAt
+        });
+        res.status(201).send("Enquete criada com sucesso!");
+        return newPoll;
 
     } catch(err) {
         return res.status(500).send(err.message);

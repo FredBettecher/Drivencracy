@@ -9,6 +9,6 @@ pollRoute.get("/poll", pollGet);
 const choiceRoute = Router();
 choiceRoute.post("/choice", choicePost);
 
-const routes = { pollRoute };
+const routes = { pollRoute, choiceRoute };
 
 export default routes;
