@@ -3,7 +3,7 @@ import { poll } from "../database/db.js";
 import { pollSchema } from "../schemas/poll.schema.js";
 
 export const pollPost = async (req, res) => {
-    let { title, expireAt } = req.body;
+    const { title, expireAt } = req.body;
     const pollValidation = pollSchema.validate( { title, expireAt } );
     const expireDate = dayjs(Date.now() + 2.592e+9).format('YYYY-MM-DD HH:mm');
 

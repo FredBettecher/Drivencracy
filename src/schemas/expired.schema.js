@@ -4,5 +4,5 @@ import date from "@joi/date";
 const joiDate = joi.extend(date);
 
 export const isExpiredSchema = joi.object({
-    expireAt: joiDate.date().less('now')
+    expireAt: joiDate.date().greater('now').format('YYYY-MM-DD HH:mm')
 });

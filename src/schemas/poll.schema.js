@@ -8,3 +8,4 @@ export const pollSchema = joi.object({
   title: joi.string().required(),
   expireAt: joiDate.date().empty('').format('YYYY-MM-DD HH:mm')
 });
+
