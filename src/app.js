@@ -11,5 +11,6 @@ app.use(cors());
 
 app.use(routes.pollRoute);
 app.use(routes.choiceRoute);
+app.use(routes.voteRoute);
 
 app.listen(process.env.PORT, () => console.log("Online on PORT:" + process.env.PORT));
